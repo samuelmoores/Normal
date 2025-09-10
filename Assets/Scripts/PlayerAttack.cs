@@ -28,14 +28,14 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1) && weapons.Count > 0)
         {
             inventory.SetActiveItem(0);
-            animator.SetBool("hasSword", false);
+            animator.SetBool("hasWeapon", false);
             weapons[0].SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2) && weapons.Count > 0)
         {
             inventory.SetActiveItem(1);
-            animator.SetBool("hasSword", true);
+            animator.SetBool("hasWeapon", true);
             weapons[0].SetActive(true);
         }
     }
@@ -43,6 +43,7 @@ public class PlayerAttack : MonoBehaviour
     public void PickupWeapon(GameObject newWeapon)
     {
         hasWeapon = true;
+        animator.SetBool("hasWeapon", true);
         weapons.Add(newWeapon);
     }
 

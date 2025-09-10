@@ -15,6 +15,8 @@ public class PlayerInventory : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         inventory.gameObject.SetActive(false);
         SetActiveItem(activeItem);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()

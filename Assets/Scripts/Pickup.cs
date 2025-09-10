@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class Pickup : MonoBehaviour
 {
     public GameObject socket;
-    public Animator animator;
     public GameObject text;
     public PlayerAttack playerAttack;
     public PlayerInventory playerInventory;
@@ -43,7 +42,6 @@ public class Pickup : MonoBehaviour
         transform.parent = socket.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        animator.SetBool("has" + weapon, true);
         text.SetActive(false);
         playerAttack.PickupWeapon(gameObject);
     }

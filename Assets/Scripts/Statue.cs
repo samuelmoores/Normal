@@ -40,6 +40,9 @@ public class Statue : MonoBehaviour
             yield return null;
         }
 
+        text.SetActive(false);
+        player.UnFreeze();
+
         SceneManager.LoadScene(scene);
     }
 

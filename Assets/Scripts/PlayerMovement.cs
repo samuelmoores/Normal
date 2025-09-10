@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
 
         controller.Move(Vector3.down * runSpeed * Time.deltaTime);
+
+        UnFreeze();
     }
 
     // Update is called once per frame
