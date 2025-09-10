@@ -4,8 +4,11 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public PlayerInventory inventory;
+    public List<AnimationClip> weaponAnimationClips;
+
     List<GameObject> weapons;
     Animator animator;
+    AnimatorOverrideController overideController;
     bool hasWeapon = false;
     bool attacking = false;
 
@@ -14,6 +17,8 @@ public class PlayerAttack : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         weapons = new List<GameObject>();
+
+        overideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
     }
 
     // Update is called once per frame
@@ -40,9 +45,34 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void PickupWeapon(GameObject newWeapon)
+    public void PickupWeapon(GameObject newWeapon, int weaponNumber)
     {
         hasWeapon = true;
+        weaponNumber *= 3;
+        
+        foreach (var anim in overideController.animationClips)
+        {
+
+            if(anim.name.Contains("WeaponIdle"))
+            {
+                Debug.Log("replace animation clip number: " + weaponNumber);
+                overideController[anim] = weaponAnimationClips[weaponNumber];
+            }
+
+            if (anim.name.Contains("WeaponRun"))
+            {
+                overideController[anim] = weaponAnimationClips[weaponNumber + 1];
+            }
+
+            if (anim.name.Contains("WeaponAttack"))
+            {
+                overideController[anim] = weaponAnimationClips[weaponNumber + 2];
+            }
+
+            animator.runtimeAnimatorController = overideController;
+        }
+        
+
         animator.SetBool("hasWeapon", true);
         weapons.Add(newWeapon);
     }

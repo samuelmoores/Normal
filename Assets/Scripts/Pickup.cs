@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,15 +11,17 @@ public class Pickup : MonoBehaviour
     public PlayerInventory playerInventory;
     public Sprite sprite;
     public string weapon;
+    public int weaponNumber;
     bool found = false;
     bool pickedUp = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        text.SetActive(true);
+        text.transform.parent.gameObject.SetActive(true);
+        text.GetComponent<TextMeshProUGUI>().text = weapon;
         Canvas.ForceUpdateCanvases();
-        text.SetActive(false);
+        text.transform.parent.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,8 +45,8 @@ public class Pickup : MonoBehaviour
         transform.parent = socket.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        text.SetActive(false);
-        playerAttack.PickupWeapon(gameObject);
+        text.transform.parent.gameObject.SetActive(false);
+        playerAttack.PickupWeapon(gameObject, weaponNumber);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,7 +54,7 @@ public class Pickup : MonoBehaviour
         if(other.CompareTag("Player") && !pickedUp)
         {
             found = true;
-            text.SetActive(true);
+            text.transform.parent.gameObject.SetActive(true);
         }
     }
 
@@ -60,7 +63,7 @@ public class Pickup : MonoBehaviour
         if(other.CompareTag("Player") && !pickedUp)
         {
             found = false;
-            text.SetActive(false);
+            text.transform.parent.gameObject.SetActive(false);
         }
     }
 }
