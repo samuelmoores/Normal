@@ -5,15 +5,15 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     public GameObject inventory;
-    public List<GameObject> inventoryImages;
+    public List<GameObject> itemImages;
     int numItems = 0; 
     int activeItem = 0;
 
     private void Start()
     {
-        inventory.SetActive(true);
+        inventory.gameObject.SetActive(true);
         Canvas.ForceUpdateCanvases();
-        inventory.SetActive(false);
+        inventory.gameObject.SetActive(false);
         SetActiveItem(activeItem);
     }
 
@@ -27,17 +27,17 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddItem(Sprite pickupSprite)
     {
-        if(numItems < inventoryImages.Count)
+        if(numItems < itemImages.Count)
         {
-            inventoryImages[++numItems].GetComponent<Image>().sprite = pickupSprite;
+            itemImages[++numItems].GetComponent<Image>().sprite = pickupSprite;
             SetActiveItem(numItems);
         }
     }
 
     public void SetActiveItem(int item)
     {
-        inventoryImages[activeItem].transform.parent.GetComponent<Image>().color = Color.black;
+        itemImages[activeItem].transform.parent.GetComponent<Image>().color = Color.black;
         activeItem = item;
-        inventoryImages[item].transform.parent.GetComponent<Image>().color = Color.red;
+        itemImages[item].transform.parent.GetComponent<Image>().color = Color.red;
     }
 }

@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float turnSpeed;
     Animator animator;
     CharacterController controller;
+    PlayerAttack playerAttack;
     bool freeze = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,12 +16,12 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();    
         controller = GetComponent<CharacterController>();
+        playerAttack = GetComponent<PlayerAttack>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         controller.Move(Vector3.down * runSpeed * Time.deltaTime);
-
     }
 
     // Update is called once per frame
@@ -64,5 +65,6 @@ public class PlayerMovement : MonoBehaviour
     public void UnFreeze()
     {
         freeze = false;
+        playerAttack.CanAttack();
     }
 }

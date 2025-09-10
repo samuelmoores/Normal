@@ -45,7 +45,7 @@ public class Pickup : MonoBehaviour
         transform.localRotation = Quaternion.identity;
         animator.SetBool("has" + weapon, true);
         text.SetActive(false);
-        playerAttack.PickupWeapon();
+        playerAttack.PickupWeapon(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
