@@ -21,7 +21,7 @@ public class Statue : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && found)
+        if(Input.GetKeyDown(KeyCode.E) && found)
         {
             textObject.GetComponent<TextMeshProUGUI>().text = "Transporting to new world";
             StartCoroutine(LoadLevel(3.0f));

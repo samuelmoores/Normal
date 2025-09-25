@@ -31,7 +31,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword_WeaponAttack
+      name: Sword_Attack
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
@@ -57,6 +57,20 @@ ModelImporter:
       events:
       - time: 0
         functionName: Freeze
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 521ba8c1243560e418fd018a08415b3d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.35005137
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 521ba8c1243560e418fd018a08415b3d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.74246085
+        functionName: EndAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 521ba8c1243560e418fd018a08415b3d, type: 3}
         floatParameter: 0

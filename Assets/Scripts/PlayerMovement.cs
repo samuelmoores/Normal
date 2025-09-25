@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +9,21 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
     PlayerAttack playerAttack;
     bool freeze = false;
+
+    public static PlayerMovement Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Pickup : MonoBehaviour
 {
@@ -27,7 +25,7 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(found && !pickedUp && Input.GetKeyDown(KeyCode.Space))
+        if(found && !pickedUp && Input.GetKeyDown(KeyCode.E))
         {
             playerInventory.AddItem(sprite);
             InitPickup();
@@ -41,6 +39,7 @@ public class Pickup : MonoBehaviour
 
     private void InitPickup()
     {
+        GetComponent<SphereCollider>().enabled = false;
         pickedUp = true;
         transform.parent = socket.transform;
         transform.localPosition = Vector3.zero;
@@ -49,11 +48,17 @@ public class Pickup : MonoBehaviour
         playerAttack.PickupWeapon(gameObject, weaponNumber);
     }
 
+    public int GetWeaponNumber()
+    {
+        return weaponNumber;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player") && !pickedUp)
         {
             found = true;
+            text.GetComponent<TextMeshProUGUI>().text = weapon;
             text.transform.parent.gameObject.SetActive(true);
         }
     }

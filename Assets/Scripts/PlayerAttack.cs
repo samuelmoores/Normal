@@ -30,51 +30,94 @@ public class PlayerAttack : MonoBehaviour
             attacking = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.Alpha1) && weapons.Count > 0)
+        //selecting weapons
+        if(weapons.Count > 0)
         {
-            inventory.SetActiveItem(0);
-            animator.SetBool("hasWeapon", false);
-            weapons[0].SetActive(false);
+            if(Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                hasWeapon = false;
+                HoldWeapon(-1); //1 is no weapon
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                hasWeapon = true;
+                HoldWeapon(0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                hasWeapon = true;
+                HoldWeapon(1);
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && weapons.Count > 0)
-        {
-            inventory.SetActiveItem(1);
-            animator.SetBool("hasWeapon", true);
-            weapons[0].SetActive(true);
-        }
     }
 
+    public void HoldWeapon(int weaponsIndex)
+    {
+        if (weaponsIndex >= weapons.Count) // pressing a key with no weapon there
+            return;
+
+        inventory.SetActiveItem(weaponsIndex + 1); //first image in inventory is no weapon
+        
+        if(weaponsIndex == -1) //put away all weapons
+        {
+            SetWeaponAnim(0);
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].SetActive(false);
+            }
+            return;
+        }
+
+        Pickup weapon = weapons[weaponsIndex].GetComponent<Pickup>();
+        weapons[weaponsIndex].SetActive(true);
+        SetWeaponAnim(weapon.GetWeaponNumber()); //each weapon has a number that corresponds to it's first animation in a list
+
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (i != weaponsIndex) 
+                weapons[i].SetActive(false); // hide the prev weapon
+        }
+    }
+        
     public void PickupWeapon(GameObject newWeapon, int weaponNumber)
     {
         hasWeapon = true;
-        weaponNumber *= 3;
-        
+        weapons.Add(newWeapon);
+        HoldWeapon(weapons.Count - 1);
+    }
+
+    private void SetWeaponAnim(int weaponNumber)
+    {
+        int animIndex = 0;
+
+        if(weaponNumber != 0)
+            animIndex = ((weaponNumber - 1) * 3) + 2;
+
+        overideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+
         foreach (var anim in overideController.animationClips)
         {
-
-            if(anim.name.Contains("WeaponIdle"))
+            if (anim.name.Contains("Idle"))
             {
-                Debug.Log("replace animation clip number: " + weaponNumber);
-                overideController[anim] = weaponAnimationClips[weaponNumber];
+                overideController[anim] = weaponAnimationClips[animIndex];
             }
 
-            if (anim.name.Contains("WeaponRun"))
+            if (anim.name.Contains("Run"))
             {
-                overideController[anim] = weaponAnimationClips[weaponNumber + 1];
+                overideController[anim] = weaponAnimationClips[animIndex + 1];
             }
 
-            if (anim.name.Contains("WeaponAttack"))
+            if (anim.name.Contains("Attack") && animIndex != 0)
             {
-                overideController[anim] = weaponAnimationClips[weaponNumber + 2];
+                overideController[anim] = weaponAnimationClips[animIndex + 2];
             }
-
-            animator.runtimeAnimatorController = overideController;
         }
-        
 
-        animator.SetBool("hasWeapon", true);
-        weapons.Add(newWeapon);
+        animator.runtimeAnimatorController = overideController;
     }
 
     public void DropWeapon()
@@ -85,5 +128,25 @@ public class PlayerAttack : MonoBehaviour
     public void CanAttack()
     {
         attacking = false;
+    }
+
+    public void Attack()
+    {
+        Sword sword = weapons[0].GetComponent<Sword>();
+
+        if (sword)
+        {
+            sword.Attack();
+        }
+    }
+
+    public void EndAttack()
+    {
+        Sword sword = weapons[0].GetComponent<Sword>();
+
+        if (sword)
+        {
+            sword.EndAttack();
+        }
     }
 }
