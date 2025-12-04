@@ -52,18 +52,18 @@ public class NPC : MonoBehaviour
         else if(agent.velocity.magnitude > 0.0f && agent.remainingDistance < agent.stoppingDistance)
         {
             animator.SetBool("walk", false);
-        }
-
-        if(goingHome)
-        {
-            NPC_UI.Instance.SetNPCText("Day");
-
-            if(Input.GetKeyDown(KeyCode.E) && found)
+            if(goingHome)
             {
-                SceneManager.LoadScene(2);
-                NPC_UI.Instance.Hide();
+                NPC_UI.Instance.SetNPCText("Day");
+
+                if(Input.GetKeyDown(KeyCode.E) && found)
+                {
+                    SceneManager.LoadScene(2);
+                    NPC_UI.Instance.Hide();
+                }
             }
         }
+
     }
 
     private void StartDialogue()
@@ -76,7 +76,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && (!moving || goingHome))
+        if(other.CompareTag("Player") && (!moving))// || goingHome))
         {
             NPC_UI.Instance.Show();
             NPC_UI.Instance.SetNPCText(Name);

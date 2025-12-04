@@ -97,14 +97,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void UnFreeze()
     {
+        Debug.Log("-------------------------UNFREEZE----------------------");
         freeze = false;
         playerAttack.CanAttack();
     }
 
     public void TakeDamage(float damageAmount)
     {
-        Freeze();
-        Debug.Log("play damage animation");
-        animator.SetTrigger("damage");
+        if(!freeze)
+        {
+            Freeze();
+            Debug.Log("play damage animation");
+            animator.SetTrigger("damage");
+        }
     }
 }
