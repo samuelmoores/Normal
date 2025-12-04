@@ -9,6 +9,7 @@ public class BreadWinnder : MonoBehaviour
     GameObject player;
     Animator animator;
     NavMeshAgent agent;
+    bool dealDamage = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,6 +46,22 @@ public class BreadWinnder : MonoBehaviour
     {
         animator.SetTrigger("damage");
         agent.isStopped = true;
+    }
+
+    public void DealDamage(int isDealingDamage)
+    {
+        if (isDealingDamage == 0)
+            dealDamage = false;
+        else
+        {
+            dealDamage = true;
+        }
+    }
+
+    public bool IsDealingDamage()
+    {
+        Debug.Log("is dealing damage is: " + dealDamage);
+        return dealDamage;
     }
 
     public void InitTheBreadWinder()

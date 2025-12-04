@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,6 +26,15 @@ public class PlayerMovement : MonoBehaviour
             Destroy(gameObject);
         }
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // This gets called every time a new scene loads
+        Debug.Log("scene loaded");
+        transform.position = Vector3.zero;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +48,11 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
 
         controller.Move(Vector3.down * runSpeed * Time.deltaTime);
+
+        Debug.Log("local: " + transform.localPosition);
+        Debug.Log("global: " + transform.position);
+
+        transform.position = Vector3.zero;
 
         UnFreeze();
     }
@@ -82,5 +99,12 @@ public class PlayerMovement : MonoBehaviour
     {
         freeze = false;
         playerAttack.CanAttack();
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        Freeze();
+        Debug.Log("play damage animation");
+        animator.SetTrigger("damage");
     }
 }

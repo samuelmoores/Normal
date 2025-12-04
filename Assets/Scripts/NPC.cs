@@ -56,11 +56,13 @@ public class NPC : MonoBehaviour
 
         if(goingHome)
         {
-            NPC_UI.Instance.SetNPCText("Return to the mountatins?");
+            NPC_UI.Instance.SetNPCText("Day");
 
             if(Input.GetKeyDown(KeyCode.E) && found)
-                SceneManager.LoadScene(0);
-
+            {
+                SceneManager.LoadScene(2);
+                NPC_UI.Instance.Hide();
+            }
         }
     }
 

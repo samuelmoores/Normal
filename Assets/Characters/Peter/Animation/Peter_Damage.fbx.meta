@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: de866ae58121d6a4a8173dcd2e22690f
+guid: 5aeb8db3f5e3b1d4b8389d4f5f8690f0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: attack
+      name: Damage
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 79
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -55,15 +55,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.32769072
-        functionName: DealDamage
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: e8add73c407755f4bbe4419df52aee10, type: 3}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.9650655
-        functionName: ReturnToIdleOrRun
+      - time: 0.97379917
+        functionName: UnFreeze
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
