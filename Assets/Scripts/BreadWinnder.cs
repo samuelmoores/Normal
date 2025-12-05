@@ -15,10 +15,16 @@ public class BreadWinnder : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameObject.SetActive(false);
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = PlayerMovement.Instance.gameObject;
+
+        gameObject.SetActive(true);
+        agent.isStopped = true;
+        ps.Play();
+        Mesh.gameObject.SetActive(false);
+        GetComponent<SphereCollider>().enabled = false;
+        StartCoroutine(Show(6.0f));
     }
 
     private void Update()
@@ -72,16 +78,6 @@ public class BreadWinnder : MonoBehaviour
     {
         Debug.Log("is dealing damage is: " + dealDamage);
         return dealDamage;
-    }
-
-    public void InitTheBreadWinder()
-    {
-        gameObject.SetActive(true);
-        agent.isStopped = true;
-        ps.Play();
-        Mesh.gameObject.SetActive(false);
-        GetComponent<SphereCollider>().enabled = false;
-        StartCoroutine(Show(6.0f));
     }
 
     IEnumerator Show(float duration)

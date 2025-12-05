@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
     PlayerAttack playerAttack;
     bool freeze = false;
+    bool hit = false;
 
     public static PlayerMovement Instance;
 
@@ -97,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void UnFreeze()
     {
-        Debug.Log("-------------------------UNFREEZE----------------------");
         freeze = false;
         playerAttack.CanAttack();
     }
@@ -107,8 +107,15 @@ public class PlayerMovement : MonoBehaviour
         if(!freeze)
         {
             Freeze();
-            Debug.Log("play damage animation");
-            animator.SetTrigger("damage");
+            if (!hit)
+            {
+                hit = true;
+                animator.SetTrigger("damage");
+            }
+            else
+            {
+                animator.SetTrigger("dead");
+            }
         }
     }
 }

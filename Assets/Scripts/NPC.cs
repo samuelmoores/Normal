@@ -7,9 +7,9 @@ public class NPC : MonoBehaviour
     public string Name;
     public Transform demonPit;
     public Transform startingPos;
+    public Spawner spawner;
     Animator animator;
     NavMeshAgent agent;
-    public BreadWinnder breadWinnnder;
     bool found = false;
     bool dialogue = false;
     bool spellCasted = false;
@@ -44,16 +44,20 @@ public class NPC : MonoBehaviour
             if (agent.remainingDistance < agent.stoppingDistance)
             {
                 spellCasted = true;
-                breadWinnnder.InitTheBreadWinder();
                 animator.SetTrigger("spell");
                 animator.SetBool("walk", false);
+                spawner.Spawn();
             }
         }
         else if(agent.velocity.magnitude > 0.0f && agent.remainingDistance < agent.stoppingDistance)
         {
             animator.SetBool("walk", false);
-            if(goingHome)
-            {
+            moving = false;
+        }
+
+        if(agent.isStopped && goingHome)
+        {
+                Debug.Log("walking back to spot");
                 NPC_UI.Instance.SetNPCText("Day");
 
                 if(Input.GetKeyDown(KeyCode.E) && found)
@@ -61,7 +65,6 @@ public class NPC : MonoBehaviour
                     SceneManager.LoadScene(2);
                     NPC_UI.Instance.Hide();
                 }
-            }
         }
 
     }
