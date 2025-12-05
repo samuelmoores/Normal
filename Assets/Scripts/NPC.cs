@@ -39,10 +39,11 @@ public class NPC : MonoBehaviour
             }
         }
 
-        if(agent.velocity.magnitude > 0.0f && !spellCasted)
+        if(agent.velocity.magnitude > 0.0f && !spellCasted && !moving && !goingHome)
         {
             if (agent.remainingDistance < agent.stoppingDistance)
             {
+                Debug.Log("spellCasted set to true");
                 spellCasted = true;
                 animator.SetTrigger("spell");
                 animator.SetBool("walk", false);
@@ -57,14 +58,16 @@ public class NPC : MonoBehaviour
 
         if(agent.isStopped && goingHome)
         {
-                Debug.Log("walking back to spot");
-                NPC_UI.Instance.SetNPCText("Day");
-
                 if(Input.GetKeyDown(KeyCode.E) && found)
                 {
-                    SceneManager.LoadScene(2);
                     NPC_UI.Instance.Hide();
-                }
+                    PlayerMovement.Instance.UnFreeze();
+                    agent.destination = demonPit.position;
+                    animator.SetBool("walk", true);
+                    moving = true;
+                    goingHome = false;
+                    Debug.Log("going home set false"); //pathfinder (D&D inspired game like bauldors gate
+            }
         }
 
     }
@@ -98,9 +101,11 @@ public class NPC : MonoBehaviour
 
     public void ReturnHome()
     {
+        Debug.Log("Go Home");
         agent.destination = startingPos.position;
         animator.SetBool("walk", true);
         goingHome = true;
+        spellCasted = false;
     }
 
 

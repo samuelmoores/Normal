@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 public class PlayerMovement : MonoBehaviour
@@ -115,7 +115,26 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 animator.SetTrigger("dead");
+                StartCoroutine(Restart(3.0f));
             }
         }
+    }
+
+    IEnumerator Restart(float duration)
+    {
+        float current = 0.0f;
+
+        while(current < duration)
+        {
+            current += Time.deltaTime;
+            Debug.Log("waiting for revive");
+            yield return null;
+        }
+
+        hit = false;
+        freeze = false;
+        animator.SetBool("dead", false);
+        UnFreeze();
+
     }
 }
