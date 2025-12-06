@@ -36,6 +36,8 @@ public class NPC : MonoBehaviour
                 agent.destination = demonPit.position;
                 animator.SetBool("walk", true);
                 moving = true;
+                spellCasted = false;
+                goingHome = false;
             }
         }
 
@@ -65,8 +67,7 @@ public class NPC : MonoBehaviour
                     agent.destination = demonPit.position;
                     animator.SetBool("walk", true);
                     moving = true;
-                    goingHome = false;
-                    Debug.Log("going home set false"); //pathfinder (D&D inspired game like bauldors gate
+                    goingHome = false; //pathfinder (D&D inspired game like bauldors gate
             }
         }
 

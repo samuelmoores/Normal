@@ -10,7 +10,7 @@ public class BreadWinnder : MonoBehaviour
     Animator animator;
     NavMeshAgent agent;
     bool dealDamage = false;
-    bool hit = false;
+    int damage = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,14 +53,16 @@ public class BreadWinnder : MonoBehaviour
     {
         agent.isStopped = true;
 
-        if (!hit)
+        if (damage++ < 5)
         {
            animator.SetTrigger("damage");
-           hit = true;
 
         }
         else
+        {
+            GameManager.Instance.KillZombie();
             animator.SetBool("dead", true);
+        }
     }
 
     public void DealDamage(int isDealingDamage)

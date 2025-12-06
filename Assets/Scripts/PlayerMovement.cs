@@ -120,6 +120,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Win()
+    {
+        Freeze();
+        animator.SetTrigger("dance");
+    }
+
     IEnumerator Restart(float duration)
     {
         float current = 0.0f;

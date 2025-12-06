@@ -33,20 +33,18 @@ public class PlayerAttack : MonoBehaviour
         //selecting weapons
         if(weapons.Count > 0)
         {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
+            if(Input.GetKeyDown(KeyCode.Alpha1) || GameManager.Instance.HasWon())
             {
                 hasWeapon = false;
                 HoldWeapon(-1); //1 is no weapon
                 return;
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 hasWeapon = true;
                 HoldWeapon(0);
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 hasWeapon = true;
                 HoldWeapon(1);
